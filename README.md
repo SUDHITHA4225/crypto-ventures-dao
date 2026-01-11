@@ -52,72 +52,10 @@ This project implements **production-grade DAO governance patterns** inspired by
 ---
 
 ##  Architecture Overview
-┌─────────────────────────────────────────────┐
-│                 DAO Members                 │
-│                                             │
-│  • Deposit ETH (stake)                       │
-│  • Create proposals                          │
-│  • Vote / Delegate votes                    │
-│                                             │
-└───────────────┬─────────────────────────────┘
-                │
-                ▼
-┌─────────────────────────────────────────────┐
-│            Governance Contract               │
-│                                             │
-│  ┌───────────────────────────────────────┐ │
-│  │ Proposal Management                    │ │
-│  │ • Proposal creation                   │ │
-│  │ • Proposal lifecycle                  │ │
-│  │   Pending → Active → Queued →          │ │
-│  │   Executed / Defeated                  │ │
-│  └───────────────────────────────────────┘ │
-│                                             │
-│  ┌───────────────────────────────────────┐ │
-│  │ Voting Engine                          │ │
-│  │ • Stake-based voting                  │ │
-│  │ • Anti-whale (sqrt-weighted power)    │ │
-│  │ • For / Against / Abstain              │ │
-│  └───────────────────────────────────────┘ │
-│                                             │
-│  ┌───────────────────────────────────────┐ │
-│  │ Delegation System                     │ │
-│  │ • Delegate voting power               │ │
-│  │ • Revocable delegation                │ │
-│  │ • Auto-included voting power           │ │
-│  └───────────────────────────────────────┘ │
-│                                             │
-│  ┌───────────────────────────────────────┐ │
-│  │ Timelock Controller                   │ │
-│  │ • Delay execution                     │ │
-│  │ • Risk-based delay duration           │ │
-│  └───────────────────────────────────────┘ │
-│                                             │
-└───────────────┬─────────────────────────────┘
-                │ (only if approved + timelock passed)
-                ▼
-┌─────────────────────────────────────────────┐
-│               Treasury Contract              │
-│                                             │
-│  • Holds DAO funds (ETH)                     │
-│  • Fund buckets:                            │
-│      - High Conviction                      │
-│      - Experimental                        │
-│      - Operational                         │
-│  • Role-based fund transfers               │
-│                                             │
-└───────────────┬─────────────────────────────┘
-                │
-                ▼
-┌─────────────────────────────────────────────┐
-│            External Recipients               │
-│                                             │
-│  • Protocols                                │
-│  • Service providers                        │
-│  • DAO members                              │
-│                                             │
-└─────────────────────────────────────────────┘
-
+CryptoVentures DAO follows a modular architecture with clear separation
+between governance logic, treasury management, and access control.
+Governance handles proposals, voting, delegation, and timelocks, while
+the Treasury contract securely manages DAO funds with role-based execution.
 
 ---
 
